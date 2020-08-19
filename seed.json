@@ -1,0 +1,17 @@
+[
+  {
+    "name": "Tatooine",
+    "climate": "arid",
+    "terrain": "desert"
+  },
+  {
+    "name": "Alderaan",
+    "climate": "temperate",
+    "terrain": "grasslands, mountains"
+  },
+  {
+    "name": "Yavin IV",
+    "climate": "temperate, tropical",
+    "terrain": "jungle, rainforests"
+  }
+]
