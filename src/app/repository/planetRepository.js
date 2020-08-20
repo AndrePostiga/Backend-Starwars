@@ -50,21 +50,14 @@ class PlanetRepository {
       throw new BadRequestError('id is not an valid objectId');
     }
 
-    const planet = this.model.findByIdAndRemove(id);
-
-    if (!planet) {
-      throw new NotFoundError(id);
-    }
+    const planet = await this.findById(id);
+    await this.model.remove({ _id: id });
     return planet;
   }
 
   async removeByName(name) {
-    const planet = await this.model.findOneAndRemove({ name });
-
-    if (!planet) {
-      throw new NotFoundError(name);
-    }
-
+    const planet = await this.findByName(name);
+    await this.model.remove({ name });
     return planet;
   }
 }
