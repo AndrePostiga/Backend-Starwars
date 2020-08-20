@@ -11,6 +11,15 @@ services:
       MONGO_INITDB_ROOT_USERNAME: ${DB_USER}
       MONGO_INITDB_ROOT_PASSWORD: ${DB_PASS}
 
+  # mongo_seed:
+  #   container_name: mongo_seed
+  #   build: .
+  #   ports:
+  #     - 27018:27017
+  #   depends_on:
+  #     - db
+
+
   api:
     image: node:latest
     container_name: api
