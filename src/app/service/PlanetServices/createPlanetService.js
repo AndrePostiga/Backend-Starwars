@@ -1,6 +1,6 @@
 import * as Yup from 'yup';
 import PlanetRepository from '../../repository/planetRepository';
-import { ConflictError, NotFoundError } from '../../errors';
+import { ConflictError, NotFoundError, BadRequestError } from '../../errors';
 
 const CREATE_VALIDATION_SCHEMA = Yup.object().shape({
   name: Yup.string()
@@ -16,20 +16,40 @@ class CreatePlanetService {
     this.repository = new PlanetRepository();
   }
 
-  async create(data) {
+  // se passar na validacao ele procura na base
+  // se achar ele retorna falso
+  // se nao encontrar ele estoura o erro do notfound e retorna verdadeiro
+  // caso de erro na requisicao ele retorna badrequest
+  async isInDatabase(data) {
+    try {
+      await this.repository.findByName(data.name);
+      return true;
+    } catch (error) {
+      if (error instanceof NotFoundError) {
+        return false;
+      }
+      throw error;
+    }
+  }
+
+  async isValidForCreation(data) {
     try {
       await CREATE_VALIDATION_SCHEMA.validate(data, { abortEarly: false });
-      const planet = await this.repository.findByName(data.name);
-      if (planet) {
-        throw new ConflictError(`Planet ${planet.name} already exists`);
-      }
-      return null;
-    } catch (err) {
-      if (!(err instanceof NotFoundError)) {
-        throw err;
-      }
-      return this.repository.create(data);
+      return true;
+    } catch (error) {
+      throw new BadRequestError(error);
     }
+  }
+
+  async create(data) {
+    await this.isValidForCreation(data);
+    const isInDatabase = await this.isInDatabase(data);
+
+    if (isInDatabase) {
+      throw new ConflictError(`planet ${data.name} already exists`);
+    }
+
+    return this.repository.create(data);
   }
 }
 
