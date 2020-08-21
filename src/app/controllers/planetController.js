@@ -22,12 +22,13 @@ class PlanetController {
     try {
       const { page = 1 } = req.query;
       const planets = await FindPlanetService.findAll(page);
-      const { docs, ...pagination } = planets;
-      const httpResponse = httpSuccess(docs, pagination);
+      const httpResponse = httpSuccess(planets);
       return res.status(httpResponse.statusCode).json(httpResponse);
     } catch (error) {
       let httpResponse = null;
       if (error instanceof InvalidParameterError) {
+        httpResponse = badRequest(error);
+      } else if (error instanceof BadRequestError) {
         httpResponse = badRequest(error);
       } else {
         httpResponse = internalServerError(new ServerError());
