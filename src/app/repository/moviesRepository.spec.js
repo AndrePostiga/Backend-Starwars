@@ -1,11 +1,6 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-undef */
-import axios from 'axios';
 import { MoviesRepository } from './moviesRepository';
-
-const swapiPlanetResource = axios.create({
-  baseURL: 'https://swapi.dev/api/planets',
-});
 
 const makeExternalApiResource = () => {
   class ExternalApiStub {
