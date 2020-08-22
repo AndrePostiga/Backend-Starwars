@@ -1,14 +1,10 @@
-import axios from 'axios';
-
-class MoviesRepository {
-  constructor() {
-    this.api = axios.create({
-      baseURL: 'https://swapi.dev/api/planets',
-    });
+export class MoviesRepository {
+  constructor(externalApiResource) {
+    this.externalApiResource = externalApiResource;
   }
 
   async getMovies(planetName) {
-    const planet = await this.api.get(`/?search=${planetName}`);
+    const planet = await this.externalApiResource.get(`/?search=${planetName}`);
     const movies = planet.data.results.shift();
     return movies;
   }
@@ -22,17 +18,4 @@ class MoviesRepository {
 
     return movies.films.length;
   }
-
-  // async getMoviesCount(planetName) {
-  //   const response = await this.api.get(`/?search=${planetName}`);
-  //   const movies = response.data.results.shift();
-
-  //   if (!movies) {
-  //     return 0;
-  //   }
-
-  //   return movies.films.length;
-  // }
 }
-
-export default MoviesRepository;

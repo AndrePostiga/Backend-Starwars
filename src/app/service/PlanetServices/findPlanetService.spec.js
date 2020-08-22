@@ -10,7 +10,7 @@ const makeSut = () => {
 };
 
 describe('Find planet service', () => {
-  it('Should call find with correct value', async () => {
+  it.skip('Should call find with correct value', async () => {
     // arrange
     const { sut } = makeSut();
     const findSpy = jest.spyOn(sut, 'find');

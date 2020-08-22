@@ -1,12 +1,10 @@
-import MoviesRepository from '../../repository/moviesRepository';
-
-class FindMovieService {
-  constructor() {
-    this.repository = new MoviesRepository();
+export class FindMovieService {
+  constructor(moviesRepository) {
+    this.moviesRepository = moviesRepository;
   }
 
   async getMoviesCount(planetName) {
-    const moviesCount = await this.repository.getMoviesCount(planetName);
+    const moviesCount = await this.moviesRepository.getMoviesCount(planetName);
     return moviesCount;
   }
 
@@ -18,5 +16,3 @@ class FindMovieService {
     };
   }
 }
-
-export default new FindMovieService();

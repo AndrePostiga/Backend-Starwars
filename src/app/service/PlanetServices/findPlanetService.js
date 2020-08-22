@@ -1,12 +1,11 @@
 /* eslint-disable no-restricted-globals */
 import { isValidObjectId } from 'mongoose';
 import { BadRequestError } from '../../errors';
-import PlanetRepository from '../../repository/planetRepository';
-import FindMovieService from '../MovieServices/findMovieService';
 
 export class FindPlanetService {
-  constructor() {
-    this.repository = new PlanetRepository();
+  constructor(planetRepository, findMovieService) {
+    this.planetRepository = planetRepository;
+    this.findMovieService = findMovieService;
   }
 
   isValidPageNumber(page) {
@@ -21,9 +20,14 @@ export class FindPlanetService {
   async findAll(page) {
     const pageNumber = this.isValidPageNumber(page);
 
-    const { docs, ...pagination } = await this.repository.findAll(pageNumber);
+    const { docs, ...pagination } = await this.planetRepository.findAll(
+      pageNumber
+    );
+
     const planetsWithMoviesCount = await Promise.all(
-      docs.map((planet) => FindMovieService.getPlanetWithMoviesCount(planet))
+      docs.map((planet) =>
+        this.findMovieService.getPlanetWithMoviesCount(planet)
+      )
     );
 
     return {
@@ -36,10 +40,10 @@ export class FindPlanetService {
     let planet = null;
 
     if (isValidObjectId(searchKey)) {
-      planet = await this.repository.findById(searchKey);
+      planet = await this.planetRepository.findById(searchKey);
     }
-    planet = await this.repository.findByName(searchKey);
+    planet = await this.planetRepository.findByName(searchKey);
 
-    return FindMovieService.getPlanetWithMoviesCount(planet);
+    return this.findMovieService.getPlanetWithMoviesCount(planet);
   }
 }

@@ -18,7 +18,7 @@ import {
   ConflictError,
 } from '../errors';
 
-class PlanetController {
+export default class PlanetController {
   constructor(findPlanetService, createPlanetService, removePlanetService) {
     this.findPlanetService = findPlanetService;
     this.createPlanetService = createPlanetService;
@@ -40,6 +40,7 @@ class PlanetController {
       } else {
         httpResponse = internalServerError(new ServerError());
       }
+      console.error(error);
       return res.status(httpResponse.statusCode).json(httpResponse);
     }
   }
@@ -105,5 +106,3 @@ class PlanetController {
     }
   }
 }
-
-export default PlanetController;

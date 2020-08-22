@@ -1,15 +1,14 @@
 import { isValidObjectId } from 'mongoose';
-import PlanetRepository from '../../repository/planetRepository';
 
 export class RemovePlanetService {
-  constructor() {
-    this.repository = new PlanetRepository();
+  constructor(planetRepository) {
+    this.planetRepository = planetRepository;
   }
 
   async remove(searchTerm) {
     if (isValidObjectId(searchTerm)) {
-      return this.repository.removeById(searchTerm);
+      return this.planetRepository.removeById(searchTerm);
     }
-    return this.repository.removeByName(searchTerm);
+    return this.planetRepository.removeByName(searchTerm);
   }
 }

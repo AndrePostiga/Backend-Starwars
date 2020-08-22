@@ -1,15 +1,36 @@
 import { Router } from 'express';
+import axios from 'axios';
 import PlanetController from './app/controllers/planetController';
 import {
   FindPlanetService,
   CreatePlanetService,
   RemovePlanetService,
 } from './app/service/PlanetServices';
+import { FindMovieService } from './app/service/MovieServices';
+import { PlanetRepository, MoviesRepository } from './app/repository';
+
+// External Resource Instance
+const swapiPlanetResource = axios.create({
+  baseURL: 'https://swapi.dev/api/planets',
+});
+
+// Repository Instances
+const planetRepository = new PlanetRepository();
+const moviesRepository = new MoviesRepository(swapiPlanetResource);
+
+// Services Instances
+const findMovieService = new FindMovieService(moviesRepository);
+const findPlanetService = new FindPlanetService(
+  planetRepository,
+  findMovieService
+);
+const createPlanetService = new CreatePlanetService(planetRepository);
+const removePlanetService = new RemovePlanetService(planetRepository);
 
 const planetController = new PlanetController(
-  new FindPlanetService(),
-  new CreatePlanetService(),
-  new RemovePlanetService()
+  findPlanetService,
+  createPlanetService,
+  removePlanetService
 );
 
 const routes = new Router();

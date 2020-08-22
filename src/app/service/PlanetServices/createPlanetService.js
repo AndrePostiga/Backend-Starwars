@@ -1,5 +1,4 @@
 import * as Yup from 'yup';
-import PlanetRepository from '../../repository/planetRepository';
 import { ConflictError, NotFoundError, BadRequestError } from '../../errors';
 
 const CREATE_VALIDATION_SCHEMA = Yup.object().shape({
@@ -12,17 +11,13 @@ const CREATE_VALIDATION_SCHEMA = Yup.object().shape({
 });
 
 export class CreatePlanetService {
-  constructor() {
-    this.repository = new PlanetRepository();
+  constructor(planetRepository) {
+    this.planetRepository = planetRepository;
   }
 
-  // se passar na validacao ele procura na base
-  // se achar ele retorna falso
-  // se nao encontrar ele estoura o erro do notfound e retorna verdadeiro
-  // caso de erro na requisicao ele retorna badrequest
   async isInDatabase(data) {
     try {
-      await this.repository.findByName(data.name);
+      await this.planetRepository.findByName(data.name);
       return true;
     } catch (error) {
       if (error instanceof NotFoundError) {
@@ -49,6 +44,6 @@ export class CreatePlanetService {
       throw new ConflictError(`planet ${data.name} already exists`);
     }
 
-    return this.repository.create(data);
+    return this.planetRepository.create(data);
   }
 }

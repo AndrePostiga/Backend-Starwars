@@ -2,7 +2,7 @@ import { isValidObjectId } from 'mongoose';
 import PlanetModel from '../model/planetModel';
 import { NotFoundError, BadRequestError } from '../errors';
 
-class PlanetRepository {
+export class PlanetRepository {
   constructor() {
     this.model = PlanetModel;
   }
@@ -57,9 +57,7 @@ class PlanetRepository {
 
   async removeByName(name) {
     const planet = await this.findByName(name);
-    await this.model.remove({ name });
+    await this.model.deleteOne({ name });
     return planet;
   }
 }
-
-export default PlanetRepository;
