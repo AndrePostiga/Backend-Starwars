@@ -1,19 +1,23 @@
 import { isValidObjectId } from 'mongoose';
-import PlanetModel from '../model/planetModel';
-import { NotFoundError, BadRequestError } from '../errors';
+import { NotFoundError, BadRequestError, ServerError } from '../errors';
 
 export class PlanetRepository {
-  constructor() {
-    this.model = PlanetModel;
+  constructor(planetModel) {
+    this.planetModel = planetModel;
   }
 
   async findAll(page) {
-    const planets = await this.model.paginate({}, { page, limit: 10 });
+    const planets = await this.planetModel.paginate({}, { page, limit: 10 });
+
+    if (!planets) {
+      throw new ServerError();
+    }
+
     return planets;
   }
 
   async findByName(name) {
-    const planet = await this.model.findOne({ name });
+    const planet = await this.planetModel.findOne({ name });
 
     if (!planet) {
       throw new NotFoundError(name);
@@ -27,7 +31,7 @@ export class PlanetRepository {
       throw new BadRequestError('id is not an valid objectId');
     }
 
-    const planet = await this.model.findById(id);
+    const planet = await this.planetModel.findById(id);
 
     if (!planet) {
       throw new NotFoundError(id);
@@ -36,28 +40,38 @@ export class PlanetRepository {
   }
 
   async create({ name, climate, terrain }) {
-    const planet = await this.model.create({
+    const planet = await this.planetModel.create({
       name,
       climate,
       terrain,
     });
 
+    if (!planet) {
+      throw new ServerError();
+    }
+
     return planet;
   }
 
   async removeById(id) {
-    if (!isValidObjectId(id)) {
-      throw new BadRequestError('id is not an valid objectId');
+    const planet = await this.findById(id);
+    const deleteInformation = await this.planetModel.deleteOne({ _id: id });
+
+    if (!deleteInformation) {
+      throw new ServerError();
     }
 
-    const planet = await this.findById(id);
-    await this.model.remove({ _id: id });
     return planet;
   }
 
   async removeByName(name) {
     const planet = await this.findByName(name);
-    await this.model.deleteOne({ name });
+    const deleteInformation = await this.planetModel.deleteOne({ name });
+
+    if (!deleteInformation) {
+      throw new ServerError();
+    }
+
     return planet;
   }
 }
