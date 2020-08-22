@@ -4,7 +4,7 @@ import { BadRequestError } from '../../errors';
 import PlanetRepository from '../../repository/planetRepository';
 import FindMovieService from '../MovieServices/findMovieService';
 
-class FindPlanetService {
+export class FindPlanetService {
   constructor() {
     this.repository = new PlanetRepository();
   }
@@ -43,5 +43,3 @@ class FindPlanetService {
     return FindMovieService.getPlanetWithMoviesCount(planet);
   }
 }
-
-export default new FindPlanetService();

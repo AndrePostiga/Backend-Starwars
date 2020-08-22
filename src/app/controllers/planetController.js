@@ -1,6 +1,7 @@
-import FindPlanetService from '../service/PlanetServices/findPlanetService';
-import CreatePlanetService from '../service/PlanetServices/createPlanetService';
-import RemovePlanetService from '../service/PlanetServices/removePlanetService';
+// import FindPlanetService from '../service/PlanetServices/findPlanetService';
+// import CreatePlanetService from '../service/PlanetServices/createPlanetService';
+// import RemovePlanetService from '../service/PlanetServices/removePlanetService';
+
 import {
   badRequest,
   created,
@@ -18,10 +19,16 @@ import {
 } from '../errors';
 
 class PlanetController {
+  constructor(findPlanetService, createPlanetService, removePlanetService) {
+    this.findPlanetService = findPlanetService;
+    this.createPlanetService = createPlanetService;
+    this.removePlanetService = removePlanetService;
+  }
+
   async index(req, res) {
     try {
       const { page = 1 } = req.query;
-      const planets = await FindPlanetService.findAll(page);
+      const planets = await this.findPlanetService.findAll(page);
       const httpResponse = httpSuccess(planets);
       return res.status(httpResponse.statusCode).json(httpResponse);
     } catch (error) {
@@ -40,7 +47,7 @@ class PlanetController {
   async indexBySearchTerm(req, res) {
     try {
       const { searchTerm } = req.params;
-      const planet = await FindPlanetService.find(searchTerm);
+      const planet = await this.findPlanetService.find(searchTerm);
       const httpResponse = httpSuccess(planet);
       return res.status(httpResponse.statusCode).json(httpResponse);
     } catch (error) {
@@ -61,7 +68,7 @@ class PlanetController {
 
   async add(req, res) {
     try {
-      const planet = await CreatePlanetService.create(req.body);
+      const planet = await this.createPlanetService.create(req.body);
       const httpResponse = created(planet);
       return res.status(httpResponse.statusCode).json(httpResponse);
     } catch (error) {
@@ -81,7 +88,7 @@ class PlanetController {
   async remove(req, res) {
     try {
       const { searchTerm } = req.params;
-      const planets = await RemovePlanetService.remove(searchTerm);
+      const planets = await this.removePlanetService.remove(searchTerm);
       const httpResponse = httpSuccess(planets);
       return res.status(httpResponse.statusCode).json(httpResponse);
     } catch (error) {
@@ -99,4 +106,4 @@ class PlanetController {
   }
 }
 
-export default new PlanetController();
+export default PlanetController;

@@ -11,7 +11,7 @@ const CREATE_VALIDATION_SCHEMA = Yup.object().shape({
   terrain: Yup.string().required().typeError('Terrain must be a string'),
 });
 
-class CreatePlanetService {
+export class CreatePlanetService {
   constructor() {
     this.repository = new PlanetRepository();
   }
@@ -52,5 +52,3 @@ class CreatePlanetService {
     return this.repository.create(data);
   }
 }
-
-export default new CreatePlanetService();

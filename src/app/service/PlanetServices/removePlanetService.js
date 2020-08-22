@@ -1,7 +1,7 @@
 import { isValidObjectId } from 'mongoose';
 import PlanetRepository from '../../repository/planetRepository';
 
-class RemovePlanetService {
+export class RemovePlanetService {
   constructor() {
     this.repository = new PlanetRepository();
   }
@@ -13,5 +13,3 @@ class RemovePlanetService {
     return this.repository.removeByName(searchTerm);
   }
 }
-
-export default new RemovePlanetService();
