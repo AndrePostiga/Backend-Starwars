@@ -41,8 +41,9 @@ export class FindPlanetService {
 
     if (isValidObjectId(searchKey)) {
       planet = await this.planetRepository.findById(searchKey);
+    } else {
+      planet = await this.planetRepository.findByName(searchKey);
     }
-    planet = await this.planetRepository.findByName(searchKey);
 
     return this.findMovieService.getPlanetWithMoviesCount(planet);
   }
