@@ -12,7 +12,6 @@ import {
 } from '../utils/http';
 import {
   BadRequestError,
-  InvalidParameterError,
   NotFoundError,
   ServerError,
   ConflictError,
@@ -33,14 +32,11 @@ export default class PlanetController {
       return res.status(httpResponse.statusCode).json(httpResponse);
     } catch (error) {
       let httpResponse = null;
-      if (error instanceof InvalidParameterError) {
-        httpResponse = badRequest(error);
-      } else if (error instanceof BadRequestError) {
+      if (error instanceof BadRequestError) {
         httpResponse = badRequest(error);
       } else {
         httpResponse = internalServerError(new ServerError());
       }
-      console.error(error);
       return res.status(httpResponse.statusCode).json(httpResponse);
     }
   }
@@ -53,9 +49,7 @@ export default class PlanetController {
       return res.status(httpResponse.statusCode).json(httpResponse);
     } catch (error) {
       let httpResponse = null;
-      if (error instanceof InvalidParameterError) {
-        httpResponse = badRequest(error);
-      } else if (error instanceof BadRequestError) {
+      if (error instanceof BadRequestError) {
         httpResponse = badRequest(error);
       } else if (error instanceof NotFoundError) {
         httpResponse = notFound(error);

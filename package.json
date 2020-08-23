@@ -10,7 +10,7 @@
     "dev": "nodemon ./src/server.js",
     "test": "jest --passWithNoTests --watch",
     "test:staged": "jest --passWithNoTests",
-    "test:ci": "yarn test -- --coverage"
+    "test:ci": "yarn test -- --coverage --watchAll"
   },
   "devDependencies": {
     "@sucrase/jest-plugin": "^2.0.0",

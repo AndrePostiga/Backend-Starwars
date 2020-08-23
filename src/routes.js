@@ -8,6 +8,7 @@ import {
 } from './app/service/PlanetServices';
 import { FindMovieService } from './app/service/MovieServices';
 import { PlanetRepository, MoviesRepository } from './app/repository';
+import PlanetModel from './app/model/planetModel';
 
 // External Resource Instance
 const swapiPlanetResource = axios.create({
@@ -15,7 +16,7 @@ const swapiPlanetResource = axios.create({
 });
 
 // Repository Instances
-const planetRepository = new PlanetRepository();
+const planetRepository = new PlanetRepository(PlanetModel);
 const moviesRepository = new MoviesRepository(swapiPlanetResource);
 
 // Services Instances
@@ -35,8 +36,10 @@ const planetController = new PlanetController(
 
 const routes = new Router();
 
-routes.get('/', (req, res) => {
-  return res.json({ hello: 'Hello World' });
+routes.get('/', async (req, res) => {
+  // return res.json({ hello: 'Hello World' });
+  const planets = await planetRepository.findAll(1);
+  res.json(planets);
 });
 
 routes.get('/api/v1/planets', (req, res) => planetController.index(req, res));
