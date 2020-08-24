@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import axios from 'axios';
+import NodeCache from 'node-cache';
 import PlanetController from './app/controllers/planetController';
 import {
   FindPlanetService,
@@ -10,6 +11,9 @@ import { FindMovieService } from './app/service/MovieServices';
 import { PlanetRepository, MoviesRepository } from './app/repository';
 import PlanetModel from './app/model/planetModel';
 
+// Cache api instance
+const cacheApi = new NodeCache({ stdTTL: process.env.ONE_MONTH });
+
 // External Resource Instance
 const swapiPlanetResource = axios.create({
   baseURL: 'https://swapi.dev/api/planets',
@@ -17,7 +21,7 @@ const swapiPlanetResource = axios.create({
 
 // Repository Instances
 const planetRepository = new PlanetRepository(PlanetModel);
-const moviesRepository = new MoviesRepository(swapiPlanetResource);
+const moviesRepository = new MoviesRepository(swapiPlanetResource, cacheApi);
 
 // Services Instances
 const findMovieService = new FindMovieService(moviesRepository);

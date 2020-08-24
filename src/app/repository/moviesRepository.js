@@ -1,6 +1,7 @@
 export class MoviesRepository {
-  constructor(externalApiResource) {
+  constructor(externalApiResource, cache) {
     this.externalApiResource = externalApiResource;
+    this.cache = cache;
   }
 
   async getMovies(planetName) {
@@ -10,12 +11,18 @@ export class MoviesRepository {
   }
 
   async getMoviesCount(planetName) {
+    const cachedValue = this.cache.get(planetName);
+    if (cachedValue) {
+      return this.cache.get(planetName);
+    }
+
     const movies = await this.getMovies(planetName);
 
     if (!movies) {
       return 0;
     }
 
+    this.cache.set(planetName, movies.films.length);
     return movies.films.length;
   }
 }
