@@ -1,5 +1,8 @@
 {
   "*.js": [
+    "eslint 'src/**/*.js' --fix"
+  ],
+  "*spec.js": [
     "eslint 'src/**/*.js' --fix",
     "yarn test:staged"
   ]

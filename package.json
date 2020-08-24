@@ -9,7 +9,7 @@
   "scripts": {
     "dev": "nodemon ./src/server.js",
     "test": "jest --passWithNoTests --watch",
-    "test:staged": "jest ./src/app --passWithNoTests",
+    "test:staged": "jest ./src/app --passWithNoTests --findRelatedTests",
     "test:ci": "yarn test -- --coverage --watchAll"
   },
   "devDependencies": {
