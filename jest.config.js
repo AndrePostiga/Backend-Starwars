@@ -8,6 +8,7 @@ module.exports = {
   coveragePathIgnorePatterns: [
     '<rootDir>/src/app/model/*',
     '<rootDir>/src/app/domain/*',
+    '<rootDir>/src/server.js',
   ],
 
   // The directory where Jest should output its coverage files

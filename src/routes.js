@@ -37,9 +37,7 @@ const planetController = new PlanetController(
 const routes = new Router();
 
 routes.get('/', async (req, res) => {
-  // return res.json({ hello: 'Hello World' });
-  const planets = await planetRepository.findAll(1);
-  res.json(planets);
+  return res.json({ ok: 'Rodando =D' });
 });
 
 routes.get('/api/v1/planets', (req, res) => planetController.index(req, res));

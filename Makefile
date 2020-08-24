@@ -3,7 +3,8 @@ include .env
 .PHONY: up
 
 up:
-	docker-compose up -d
+	docker-compose -f docker-compose.yml up -d
+	docker exec db mongoimport --host db --username ${DB_USER} --password ${DB_PASS} --authenticationDatabase admin -d planets_api -c planets --type json --file /seed.json --jsonArray
 
 .PHONY: down
 
@@ -14,3 +15,19 @@ down:
 
 logs:
 	docker-compose logs -f
+
+.PHONY: tests
+
+tests:
+	docker-compose -f docker-compose-test.yml up -d
+	docker exec db mongoimport --host db --username ${DB_USER} --password ${DB_PASS} --authenticationDatabase admin -d planets_api -c planets --type json --file /seed.json --jsonArray
+	DB_HOST=localhost yarn test
+	docker-compose -f docker-compose-test.yml down
+
+.PHONY: testsCi
+
+testsCi:
+	docker-compose -f docker-compose-test.yml up -d
+	docker exec db mongoimport --host db --username ${DB_USER} --password ${DB_PASS} --authenticationDatabase admin -d planets_api -c planets --type json --file /seed.json --jsonArray
+	DB_HOST=localhost yarn test:ci
+	docker-compose -f docker-compose-test.yml down

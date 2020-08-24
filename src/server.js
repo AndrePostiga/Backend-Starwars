@@ -1,3 +1,5 @@
-import app from './app';
+import bootstrapApp from './app';
 
-app.listen(process.env.SERVER_PORT, '0.0.0.0');
+bootstrapApp().then((app) => {
+  app.listen(process.env.SERVER_PORT, '0.0.0.0');
+});

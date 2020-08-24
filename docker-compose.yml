@@ -7,27 +7,16 @@ services:
     ports:
       - ${DB_PORT}:27017
     volumes:
-      - ./mongoDataDir:/data/db
+      - ./seed.json:/seed.json
     environment:
       MONGO_INITDB_DATABASE: ${DB_NAME}
       MONGO_INITDB_ROOT_USERNAME: ${DB_USER}
       MONGO_INITDB_ROOT_PASSWORD: ${DB_PASS}
 
-  # mongo_seed:
-  #   container_name: mongo_seed
-  #   build: .
-  #   ports:
-  #     - 27018:27017
-  #   depends_on:
-  #     - db
-
-
   api:
     image: node:latest
     container_name: api
     restart: always
-    env_file:
-      - .env
     depends_on:
       - db
     ports:
@@ -41,5 +30,7 @@ services:
       options:
         max-size: "10m"
         max-file: "5"
+
+
 
 

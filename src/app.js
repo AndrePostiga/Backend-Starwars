@@ -1,21 +1,20 @@
 import express from 'express';
+import dotenv from 'dotenv';
 import routes from './routes';
-import './database';
+import { initDb } from './database';
 
-class App {
-  constructor() {
-    this.server = express();
-    this.middlewares();
-    this.routes();
-  }
+export default async function bootstrap() {
+  dotenv.config();
 
-  middlewares() {
-    this.server.use(express.json());
-  }
+  await initDb();
 
-  routes() {
-    this.server.use(routes);
-  }
+  const app = express();
+
+  // middlewares
+  app.use(express.json());
+
+  // routes
+  app.use(routes);
+
+  return app;
 }
-
-export default new App().server;
