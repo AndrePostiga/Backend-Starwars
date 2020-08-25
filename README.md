@@ -14,7 +14,10 @@ Dada a seguinte entidade
  - [x] Retornar junto aos dados a quantidade de aparições em filmes
 
 ### `A Api e como utilizar`
+<<<<<<< HEAD
 A aplicação é uma API Rest contruída em cima da stack de ferramentas do Node.Js. Para persistir os dados ela utiliza o banco de dados MongoDB, um banco NoSQL que armazena dados de forma não estruturada.
+=======
+>>>>>>> e96df64afaea6c113442ec208424abcef70dde51
 
 #### `Arquitetura`
 A arquitetura da aplicação foi inspirada na arquitetura em camadas e escolhida de forma que deixasse o projeto extensível e fácil de adicionar novos modelos e endpoints.
@@ -61,7 +64,13 @@ Ao rodar o testsCi o Jest gera um relatório de cobertura que está dentro da pa
 <img src="https://i.imgur.com/45FHkbQ.png">
 
 #### `As Ferramentas`
+<<<<<<< HEAD
 Os seguintes recursos foram utilizados para melhorar a experiência e a qualidade do desenvolvimento.
+=======
+A aplicação é uma API Rest contruída em cima da stack de ferramentas do Node.Js. Para persistir os dados ela utiliza o banco de dados MongoDB, um banco NoSQL que armazena dados de forma não estruturada.
+
+Outros recursos foram utilizados para melhorar a experiência e a qualidade do desenvolvimento.
+>>>>>>> e96df64afaea6c113442ec208424abcef70dde51
 
  - ###### `Nodemon + Sucrase`
 Utilizado para monitorar a mudança de estado dos arquivos e transpilar o código escrito em ES6 para CommonJs. Essa combinação permite utilizar as últimas features da linguagem que ainda não são suportadas nativamente pelo node, como a sintax Import/Export.
