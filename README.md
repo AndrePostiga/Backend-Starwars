@@ -18,7 +18,30 @@ A aplicação é uma API Rest construída em cima da stack de ferramentas do Nod
 
 Para facilitar os testes construí um ambiente de desenvolvimento utilizando Docker-Compose, este ambiente consiste de dois contêiners que hospedam o MongoDB e a API em Node.
 
-Para rodar a aplicação basta rodar os seguintes comandos na raiz do projeto:
+Para rodar a aplicação basta adicionar o arquivo .ENV ( Na raiz do projeto, existe um arquivo chamado .env.example que pode ser utilizado como boiler plate para criar seu .env ).
+
+Obs: As seguintes variáveis de ambiente são obrigatórias 
+DB_HOST=db
+DB_PORT=27017
+DB_NAME=planets_api
+
+Abaixo um exemplo de .env que eu utilizei:
+```
+MODE_ENV=development
+
+# Server
+SERVER_PORT=3001
+
+# DB
+DB_HOST=db
+DB_PORT=27017
+DB_NAME=planets_api
+DB_USER=planetsApi
+DB_PASS=planetsApi
+```
+
+e rodar os seguintes comandos na raiz do projeto:
+
 ```bash
 yarn install
 make up
