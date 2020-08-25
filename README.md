@@ -79,6 +79,7 @@ A Api é de consulta, então nenhuma API Key, JWT ou qualquer outra forma de aut
 
 #### `Arquitetura`
 A arquitetura da aplicação foi inspirada na arquitetura em camadas e escolhida de forma que deixasse o projeto extensível e fácil de adicionar novos modelos e endpoints. 
+
 <img src="https://i.imgur.com/dKeuy6Y.png">
 
 Para adicionar uma nova entidade basta adicionar suas devidas camadas na arquitetura desenhada acima, de forma que as regras de negócio fiquem desacopladas do resto do código.
