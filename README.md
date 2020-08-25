@@ -1,4 +1,4 @@
-#`Backend - Star Wars (Node.js)`
+`Backend - Star Wars (Node.js)`
 ------------------------------
 
 ### `Objetivo`
@@ -214,9 +214,7 @@ Acredito que pelo tempo disponível o projeto ficou bem completo. No entanto, se
 
  - Utilizar TypeScript para tornar o projeto um pouco mais escalável e mais fortemente tipado
  - Refatorar alguns pontos para melhorar a legibilidade
- - Aplicar algum padrão de projeto para deixar o código mais extensível e reutilizável
- - Talvez mudar a arquitetura para uma arquitetura mais adequada
  - Loggar mais a aplicação
- - Implementar algum tipo de autenticação ou API Key
+ - Implementar uma API Key
  - Utilizar orquestradores para os contêiners 
  - Fazer mais testes
