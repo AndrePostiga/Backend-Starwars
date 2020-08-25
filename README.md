@@ -2,7 +2,7 @@
 ------------------------------
 
 ### `Objetivo`
-Desenvolver uma API Rest utilizando Node.js, persistindo os dados utilizando um banco NoSql.
+Desenvolver uma API Rest utilizando Node.js, persistindo os dados utilizando um banco NoSql. 
 
 #### `Requisitos`
 Dada a seguinte entidade
@@ -14,10 +14,71 @@ Dada a seguinte entidade
  - [x] Retornar junto aos dados a quantidade de aparições em filmes
 
 ### `A Api e como utilizar`
-A aplicação é uma API Rest contruída em cima da stack de ferramentas do Node.Js. Para persistir os dados ela utiliza o banco de dados MongoDB, um banco NoSQL que armazena dados de forma não estruturada.
+A aplicação é uma API Rest construída em cima da stack de ferramentas do Node.Js. Para persistir os dados ela utiliza o banco de dados MongoDB, um banco NoSQL que armazena dados de forma não estruturada.
+
+Para facilitar os testes construí um ambiente de desenvolvimento utilizando Docker-Compose, este ambiente consiste de dois contêiners que hospedam o MongoDB e a API em Node.
+
+Para rodar a aplicação basta rodar os seguintes comandos na raiz do projeto:
+```bash
+yarn install
+make up
+``` 
+Esses comandos vão instalar as dependências do projeto, e rodar os comandos necessários para subir a aplicação. O "make up" gerará os seguintes comandos no terminal:
+
+```bash
+docker-compose -f docker-compose.yml up -d
+
+docker exec db mongoimport --host db --username ${DB_USER} --password ${DB_PASS} --authenticationDatabase admin -d planets_api -c planets --type json --file /seed.json --jsonArray
+```
+
+O primeiro comando executa o arquivo docker-compose.yml e o segundo importa os valores iniciais que estão no arquivo seed.json
+
+Exemplo de como a seed está estruturada:
+
+```json
+[
+	{
+		"_id": {
+			"$oid": "5f42fd067ee9eb00564f9fcd"
+		},
+		"name": "Alderaan",
+		"climate": "temperate",
+		"terrain": "grasslands, mountains"
+	},
+	{
+		"_id": {
+			"$oid": "5f42fd0c7ee9eb00564f9fce"
+		},
+		"name": "Yavin IV",
+		"climate": "temperate, tropical",
+		"terrain": "jungle, rainforests"
+	}
+]
+```
+
+O make up não exibe o terminal de forma interativa, portanto apenas com esse comando não é possível ver os logs, para ver os logs o MakeFile também possui um comando, basta digitar no terminal
+```bash
+make logs
+```
+E os logs tanto do MongoDb quanto da API vão aparecer no terminal.
+
+Para parar a execução da aplicação e do banco basta utilizar o comando
+```bash
+make down
+```
+
+#### `Utilizando a API`
+Para utilizar a API qualquer programa que suporte o procolo HTTP pode ser utilizado. 
+Abaixo podemos ver todos os verbos com um exemplo de requisição e as possíveis respostas que a API pode produzir.
+
+<img src="https://i.imgur.com/wq1lM23.png">
+
+A API também conta com um serviço de cache. Como o serviço externo da Swapi é um pouco lento, conseguimos reduzir os tempos de resposta cacheando os valores de retorno com um TTL de 1 mês.
+
+A Api é de consulta, então nenhuma API Key, JWT ou qualquer outra forma de autenticação foi implementada.
 
 #### `Arquitetura`
-A arquitetura da aplicação foi inspirada na arquitetura em camadas e escolhida de forma que deixasse o projeto extensível e fácil de adicionar novos modelos e endpoints.
+A arquitetura da aplicação foi inspirada na arquitetura em camadas e escolhida de forma que deixasse o projeto extensível e fácil de adicionar novos modelos e endpoints. 
 <img src="https://i.imgur.com/dKeuy6Y.png">
 
 Para adicionar uma nova entidade basta adicionar suas devidas camadas na arquitetura desenhada acima, de forma que as regras de negócio fiquem desacopladas do resto do código.
@@ -61,7 +122,7 @@ Ao rodar o testsCi o Jest gera um relatório de cobertura que está dentro da pa
 <img src="https://i.imgur.com/45FHkbQ.png">
 
 #### `As Ferramentas`
-Os seguintes recursos foram utilizados para melhorar a experiência e a qualidade do desenvolvimento.
+Outros recursos foram utilizados para melhorar a experiência e a qualidade do desenvolvimento.
 
  - ###### `Nodemon + Sucrase`
 Utilizado para monitorar a mudança de estado dos arquivos e transpilar o código escrito em ES6 para CommonJs. Essa combinação permite utilizar as últimas features da linguagem que ainda não são suportadas nativamente pelo node, como a sintax Import/Export.
@@ -133,11 +194,28 @@ Backend-Starwars/
 │   │   └── index.js
 │   ├── routes.js
 │   └── server.js
-├── tree.txt
 └── yarn.lock
 ```
----
+---   
 #####  `Considerações`
+Apesar de terem poucas features a serem implementadas, o projeto foi um desafio e tanto. Tentei focar no valor e na qualidade do código, implementando ferramentas para melhorar desde a qualidade de escrita do código até convenção de commits.
 
+Tive que resolver alguns problemas que não estou habituado a encontrar, por exemplo, testes automatizados e E2E. Foi muita pesquisa até conseguir chegar em quase todo o código com cobertura. 
+
+O Javascript não é minha linguagem principal, mas em conjunto com o Node.js se mostrou muito bom para fazer o projeto.
+
+Felizmente a comunidade é sensacional e todo esse conteúdo eu consegui achar pesquisando e pedindo dicas para amigos mais experientes. 
+
+Todos os micro desafios encontrados durante o desenvolvimento deste projeto, definitivamente, me fizeram um programador melhor, me esticando em alguns assuntos que eu ainda não tinha domínio ou me apresentando assuntos novos.
 
 #####  `Pontos de melhora`
+Acredito que pelo tempo disponível o projeto ficou bem completo. No entanto, sempre há o que melhorar:
+
+ - Utilizar TypeScript para tornar o projeto um pouco mais escalável e mais fortemente tipado
+ - Refatorar alguns pontos para melhorar a legibilidade
+ - Aplicar algum padrão de projeto para deixar o código mais extensível e reutilizável
+ - Talvez mudar a arquitetura para uma arquitetura mais adequada
+ - Loggar mais a aplicação
+ - Implementar algum tipo de autenticação ou API Key
+ - Utilizar orquestradores para os contêiners 
+ - Fazer mais testes
