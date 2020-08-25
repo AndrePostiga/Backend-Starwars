@@ -2,7 +2,7 @@
 ------------------------------
 
 ### `Objetivo`
-Desenvolver uma API Rest utilizando Node.js, persistindo os dados utilizando um banco NoSql. 
+Desenvolver uma API Rest utilizando Node.js, persistindo os dados em um banco NoSql.
 
 #### `Requisitos`
 Dada a seguinte entidade
@@ -20,11 +20,11 @@ Para facilitar os testes construí um ambiente de desenvolvimento utilizando Doc
 
 Para rodar a aplicação basta adicionar o arquivo .ENV ( Na raiz do projeto, existe um arquivo chamado .env.example que pode ser utilizado como boiler plate para criar seu .env ).
 
-Obs: As seguintes variáveis de ambiente são obrigatórias 
+Obs: As seguintes variáveis de ambiente são obrigatórias
+```
 DB_HOST=db
 DB_PORT=27017
-DB_NAME=planets_api
-
+```
 Abaixo um exemplo de .env que eu utilizei:
 ```
 MODE_ENV=development
@@ -45,7 +45,7 @@ e rodar os seguintes comandos na raiz do projeto:
 ```bash
 yarn install
 make up
-``` 
+```
 Esses comandos vão instalar as dependências do projeto, e rodar os comandos necessários para subir a aplicação. O "make up" gerará os seguintes comandos no terminal:
 
 ```bash
@@ -91,7 +91,7 @@ make down
 ```
 
 #### `Utilizando a API`
-Para utilizar a API qualquer programa que suporte o procolo HTTP pode ser utilizado. 
+Para utilizar a API qualquer programa que suporte o procolo HTTP pode ser utilizado.
 Abaixo podemos ver todos os verbos com um exemplo de requisição e as possíveis respostas que a API pode produzir.
 
 <img src="https://i.imgur.com/wq1lM23.png">
@@ -101,7 +101,7 @@ A API também conta com um serviço de cache. Como o serviço externo da Swapi �
 A Api é de consulta, então nenhuma API Key, JWT ou qualquer outra forma de autenticação foi implementada.
 
 #### `Arquitetura`
-A arquitetura da aplicação foi inspirada na arquitetura em camadas e escolhida de forma que deixasse o projeto extensível e fácil de adicionar novos modelos e endpoints. 
+A arquitetura da aplicação foi inspirada na arquitetura em camadas e escolhida de forma que deixasse o projeto extensível e fácil de adicionar novos modelos e endpoints.
 
 <img src="https://i.imgur.com/dKeuy6Y.png">
 
@@ -221,15 +221,15 @@ Backend-Starwars/
 │   └── server.js
 └── yarn.lock
 ```
----   
+---
 #####  `Considerações`
 Apesar de terem poucas features a serem implementadas, o projeto foi um desafio e tanto. Tentei focar no valor e na qualidade do código, implementando ferramentas para melhorar desde a qualidade de escrita do código até convenção de commits.
 
-Tive que resolver alguns problemas que não estou habituado a encontrar, por exemplo, testes automatizados e E2E. Foi muita pesquisa até conseguir chegar em quase todo o código com cobertura. 
+Tive que resolver alguns problemas que não estou habituado a encontrar, por exemplo, testes automatizados e E2E. Foi muita pesquisa até conseguir chegar em quase todo o código com cobertura.
 
 O Javascript não é minha linguagem principal, mas em conjunto com o Node.js se mostrou muito bom para fazer o projeto.
 
-Felizmente a comunidade é sensacional e todo esse conteúdo eu consegui achar pesquisando e pedindo dicas para amigos mais experientes. 
+Felizmente a comunidade é sensacional e todo esse conteúdo eu consegui achar pesquisando e pedindo dicas para amigos mais experientes.
 
 Todos os micro desafios encontrados durante o desenvolvimento deste projeto, definitivamente, me fizeram um programador melhor, me esticando em alguns assuntos que eu ainda não tinha domínio ou me apresentando assuntos novos.
 
@@ -240,5 +240,5 @@ Acredito que pelo tempo disponível o projeto ficou bem completo. No entanto, se
  - Refatorar alguns pontos para melhorar a legibilidade
  - Loggar mais a aplicação
  - Implementar uma API Key
- - Utilizar orquestradores para os contêiners 
+ - Utilizar orquestradores para os contêiners
  - Fazer mais testes
