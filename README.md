@@ -120,6 +120,7 @@ docker-compose -f docker-compose-test.yml down
 `````
 
 Ao rodar o testsCi o Jest gera um relatório de cobertura que está dentro da pasta Coverage deste repositório, também pode ser visualizada abaixo:
+
 <img src="https://i.imgur.com/45FHkbQ.png">
 
 #### `As Ferramentas`
