@@ -4,7 +4,7 @@ include .env
 
 up:
 	docker-compose -f docker-compose.yml up -d
-	docker exec db mongoimport --host db --username ${DB_USER} --password ${DB_PASS} --authenticationDatabase admin -d planets_api -c planets --type json --file /seed.json --jsonArray
+	docker exec db mongoimport --host ${DB_HOST} --username ${DB_USER} --password ${DB_PASS} --authenticationDatabase admin -d ${DB_NAME} -c planets --type json --file /seed.json --jsonArray
 
 .PHONY: down
 
@@ -20,7 +20,7 @@ logs:
 
 tests:
 	docker-compose -f docker-compose-test.yml up -d
-	docker exec db mongoimport --host db --username ${DB_USER} --password ${DB_PASS} --authenticationDatabase admin -d planets_api -c planets --type json --file /seed.json --jsonArray
+	docker exec db mongoimport --host ${DB_HOST} --username ${DB_USER} --password ${DB_PASS} --authenticationDatabase admin -d ${DB_NAME} -c planets --type json --file /seed.json --jsonArray
 	DB_HOST=localhost yarn test
 	docker-compose -f docker-compose-test.yml down
 
@@ -28,6 +28,6 @@ tests:
 
 testsCi:
 	docker-compose -f docker-compose-test.yml up -d
-	docker exec db mongoimport --host db --username ${DB_USER} --password ${DB_PASS} --authenticationDatabase admin -d planets_api -c planets --type json --file /seed.json --jsonArray
+	docker exec db mongoimport --host ${DB_HOST} --username ${DB_USER} --password ${DB_PASS} --authenticationDatabase admin -d ${DB_NAME} -c planets --type json --file /seed.json --jsonArray
 	DB_HOST=localhost yarn test:ci
 	docker-compose -f docker-compose-test.yml down
